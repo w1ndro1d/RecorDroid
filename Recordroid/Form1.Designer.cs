@@ -33,14 +33,6 @@ namespace Recordroid
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.storePathTextBox = new System.Windows.Forms.TextBox();
             this.desktopAudioChkBox = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.recordButton = new Recordroid.CircularButton();
             this.pauseButton = new Recordroid.CircularButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,7 +41,11 @@ namespace Recordroid
             this.settingsButton = new Recordroid.CircularButton();
             this.micAudioChkBox = new System.Windows.Forms.CheckBox();
             this.browseButton = new Recordroid.CircularButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fpsTrackBar = new System.Windows.Forms.TrackBar();
+            this.fpsLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fpsTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // storePathTextBox
@@ -59,110 +55,17 @@ namespace Recordroid
             this.storePathTextBox.Name = "storePathTextBox";
             this.storePathTextBox.Size = new System.Drawing.Size(328, 23);
             this.storePathTextBox.TabIndex = 4;
-            this.storePathTextBox.Text = "Choose location to store recording";
+            this.storePathTextBox.Text = "Choose location to save recording";
             // 
             // desktopAudioChkBox
             // 
             this.desktopAudioChkBox.AutoSize = true;
-            this.desktopAudioChkBox.Location = new System.Drawing.Point(24, 144);
+            this.desktopAudioChkBox.Location = new System.Drawing.Point(24, 153);
             this.desktopAudioChkBox.Name = "desktopAudioChkBox";
             this.desktopAudioChkBox.Size = new System.Drawing.Size(141, 19);
             this.desktopAudioChkBox.TabIndex = 6;
             this.desktopAudioChkBox.Text = "Record desktop audio";
             this.desktopAudioChkBox.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.radioButton7);
-            this.groupBox1.Controls.Add(this.radioButton6);
-            this.groupBox1.Controls.Add(this.radioButton5);
-            this.groupBox1.Controls.Add(this.radioButton4);
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(23, 93);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(328, 37);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Framerate";
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(282, 15);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(43, 19);
-            this.radioButton7.TabIndex = 6;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "300";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(232, 15);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(43, 19);
-            this.radioButton6.TabIndex = 5;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "144";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(182, 15);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(43, 19);
-            this.radioButton5.TabIndex = 4;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "120";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(138, 15);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(37, 19);
-            this.radioButton4.TabIndex = 3;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "90";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(95, 15);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(37, 19);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "60";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(52, 15);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(37, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "30";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 15);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(40, 19);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "24 ";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // recordButton
             // 
@@ -172,7 +75,7 @@ namespace Recordroid
             this.recordButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.recordButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.recordButton.Image = ((System.Drawing.Image)(resources.GetObject("recordButton.Image")));
-            this.recordButton.Location = new System.Drawing.Point(163, 161);
+            this.recordButton.Location = new System.Drawing.Point(163, 182);
             this.recordButton.Name = "recordButton";
             this.recordButton.Size = new System.Drawing.Size(36, 36);
             this.recordButton.TabIndex = 8;
@@ -187,7 +90,7 @@ namespace Recordroid
             this.pauseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.pauseButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.pauseButton.Image = ((System.Drawing.Image)(resources.GetObject("pauseButton.Image")));
-            this.pauseButton.Location = new System.Drawing.Point(205, 161);
+            this.pauseButton.Location = new System.Drawing.Point(205, 182);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(36, 36);
             this.pauseButton.TabIndex = 9;
@@ -196,7 +99,7 @@ namespace Recordroid
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(248, 174);
+            this.label1.Location = new System.Drawing.Point(248, 195);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 15);
             this.label1.TabIndex = 11;
@@ -204,7 +107,7 @@ namespace Recordroid
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(110, 174);
+            this.label2.Location = new System.Drawing.Point(110, 195);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 12;
@@ -216,7 +119,7 @@ namespace Recordroid
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
-            this.settingsButton.Location = new System.Drawing.Point(357, 96);
+            this.settingsButton.Location = new System.Drawing.Point(2, 182);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(36, 36);
             this.settingsButton.TabIndex = 14;
@@ -226,7 +129,7 @@ namespace Recordroid
             // micAudioChkBox
             // 
             this.micAudioChkBox.AutoSize = true;
-            this.micAudioChkBox.Location = new System.Drawing.Point(232, 144);
+            this.micAudioChkBox.Location = new System.Drawing.Point(232, 153);
             this.micAudioChkBox.Name = "micAudioChkBox";
             this.micAudioChkBox.Size = new System.Drawing.Size(119, 19);
             this.micAudioChkBox.TabIndex = 17;
@@ -240,16 +143,50 @@ namespace Recordroid
             this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.browseButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.browseButton.Image = ((System.Drawing.Image)(resources.GetObject("browseButton.Image")));
-            this.browseButton.Location = new System.Drawing.Point(357, 57);
+            this.browseButton.Location = new System.Drawing.Point(357, 55);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(36, 36);
             this.browseButton.TabIndex = 18;
             this.browseButton.UseVisualStyleBackColor = false;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.fpsTrackBar);
+            this.groupBox1.Location = new System.Drawing.Point(23, 94);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(328, 51);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Frames per second (FPS)";
+            // 
+            // fpsTrackBar
+            // 
+            this.fpsTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fpsTrackBar.LargeChange = 3;
+            this.fpsTrackBar.Location = new System.Drawing.Point(3, 19);
+            this.fpsTrackBar.Maximum = 7;
+            this.fpsTrackBar.Minimum = 1;
+            this.fpsTrackBar.Name = "fpsTrackBar";
+            this.fpsTrackBar.Size = new System.Drawing.Size(322, 29);
+            this.fpsTrackBar.TabIndex = 16;
+            this.fpsTrackBar.Value = 2;
+            this.fpsTrackBar.Scroll += new System.EventHandler(this.fpsTrackBar_Scroll);
+            // 
+            // fpsLabel
+            // 
+            this.fpsLabel.AutoSize = true;
+            this.fpsLabel.Location = new System.Drawing.Point(361, 115);
+            this.fpsLabel.Name = "fpsLabel";
+            this.fpsLabel.Size = new System.Drawing.Size(19, 15);
+            this.fpsLabel.TabIndex = 18;
+            this.fpsLabel.Text = "30";
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(400, 202);
+            this.ClientSize = new System.Drawing.Size(400, 221);
+            this.Controls.Add(this.fpsLabel);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.micAudioChkBox);
             this.Controls.Add(this.settingsButton);
@@ -257,7 +194,6 @@ namespace Recordroid
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(this.recordButton);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.desktopAudioChkBox);
             this.Controls.Add(this.storePathTextBox);
             this.MaximizeBox = false;
@@ -269,6 +205,7 @@ namespace Recordroid
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fpsTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,14 +214,6 @@ namespace Recordroid
         #endregion
         private System.Windows.Forms.TextBox storePathTextBox;
         private System.Windows.Forms.CheckBox desktopAudioChkBox;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
         private CircularButton recordButton;
         private CircularButton pauseButton;
         private System.Windows.Forms.Label label1;
@@ -293,6 +222,9 @@ namespace Recordroid
         private CircularButton settingsButton;
         private System.Windows.Forms.CheckBox micAudioChkBox;
         private CircularButton browseButton;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.TrackBar fpsTrackBar;
+        public System.Windows.Forms.Label fpsLabel;
     }
 }
 

@@ -163,7 +163,7 @@ namespace Recordroid
             this.doneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.doneButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.doneButton.Image = ((System.Drawing.Image)(resources.GetObject("doneButton.Image")));
-            this.doneButton.Location = new System.Drawing.Point(390, 23);
+            this.doneButton.Location = new System.Drawing.Point(389, 21);
             this.doneButton.Name = "doneButton";
             this.doneButton.Size = new System.Drawing.Size(36, 36);
             this.doneButton.TabIndex = 22;

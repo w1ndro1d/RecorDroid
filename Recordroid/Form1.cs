@@ -46,7 +46,7 @@ namespace Recordroid
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            radioButton3.Checked = true; //default FPS is 60
+
             desktopAudioChkBox.Checked = true;
             
         }
@@ -222,7 +222,33 @@ namespace Recordroid
             
         }
 
-
+        private void fpsTrackBar_Scroll(object sender, EventArgs e)
+        {
+            switch (fpsTrackBar.Value)
+            {
+                case 1:
+                    fpsLabel.Text = "24";
+                    break;
+                case 2:
+                    fpsLabel.Text = "30";
+                    break;
+                case 3:
+                    fpsLabel.Text = "60";
+                    break;
+                case 4:
+                    fpsLabel.Text = "90";
+                    break;
+                case 5:
+                    fpsLabel.Text = "120";
+                    break;
+                case 6:
+                    fpsLabel.Text = "144";
+                    break;
+                case 7:
+                    fpsLabel.Text = "300";
+                    break;
+            }
+        }
     }
     
 }
