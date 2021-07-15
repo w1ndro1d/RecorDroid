@@ -48,7 +48,9 @@ namespace Recordroid
         {
 
             desktopAudioChkBox.Checked = true;
-            
+            copyLocationButton.Enabled = false;
+            pauseButton.Enabled = false;
+
         }
 
         private void circularButton1_Click(object sender, EventArgs e)
@@ -56,29 +58,38 @@ namespace Recordroid
             if (isRecording)
             {
                 rec.Stop(); //if already recording, stop
-                secondsElapsed = 0; //and reset secondsElapsed
                 label2.Text = "";
                 label1.Text = "";
                 settingsButton.Enabled = true;
                 desktopAudioChkBox.Enabled = true;
                 micAudioChkBox.Enabled = true;
                 browseButton.Enabled = true;
-                groupBox1.Enabled = false;
-                return; //no need of proceeding further if already recording
+                groupBox1.Enabled = true;
+                copyLocationButton.Enabled = true;
+                pauseButton.Enabled = false;
+                progressTimer?.Stop();
+                progressTimer = null;
+                secondsElapsed = 0;
+                return;
+
             }
 
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             string videoPath = Path.Combine(storePathTextBox.Text, "RecorDroid", timestamp, timestamp + ".mp4");//for video filename
 
+            progressTimer = new System.Windows.Forms.Timer();
             progressTimer.Tick += progressTimer_Tick;
             progressTimer.Interval = 1000;
             progressTimer.Start();
+
             label1.Text = "Recording";
             settingsButton.Enabled = false;
             desktopAudioChkBox.Enabled = false;
             micAudioChkBox.Enabled = false;
             browseButton.Enabled = false;
             groupBox1.Enabled = false;
+            pauseButton.Enabled = true;
+
 
             if (rec == null)
             {
@@ -153,6 +164,7 @@ namespace Recordroid
                 rec = Recorder.CreateRecorder(options); //create Recorder rec with options
                 rec.OnRecordingComplete += rec_OnRecordingComplete;
                 rec.OnRecordingFailed += rec_OnRecordingFailed;
+                rec.OnStatusChanged += rec_OnStatusChanged;
             }
 
             rec.Record(videoPath); //main operation
@@ -186,7 +198,7 @@ namespace Recordroid
             BeginInvoke(((Action)(() =>
             {
                 string filePath = e.FilePath;
-                storePathTextBox.Text = filePath;
+                recordPathTextBox.Text = filePath;
                 label1.Text = "Finished Recording!";
                 recordButton.Enabled = true;
                 isRecording = false;
@@ -194,12 +206,34 @@ namespace Recordroid
             })));
         }
 
+        private void rec_OnStatusChanged(object sender, RecordingStatusEventArgs e)
+        {
+            BeginInvoke(((Action)(() =>
+            {
+                switch (e.Status)
+                {
+                    case RecorderStatus.Paused:
+                        if (progressTimer != null)
+                            progressTimer.Enabled = false;
+                        label1.Text = "Paused";
+                        break;
+                    case RecorderStatus.Recording:
+                        if (progressTimer != null)
+                            progressTimer.Enabled = true;
+                        label1.Text = "Recording";
+                        break;
+                    default:
+                        break;
+                }
+            })));
+        }
 
         private void CleanupResources()
         {
-            progressTimer.Stop();
+            progressTimer?.Stop();
             progressTimer = null;
             secondsElapsed = 0;
+            rec?.Dispose();
             rec = null;
 
         }
@@ -211,7 +245,7 @@ namespace Recordroid
             {
                 storePathTextBox.Text = fbd.SelectedPath;
                 recordButton.Enabled = true;
-                pauseButton.Enabled = true;
+                
 
             }
         }
@@ -248,6 +282,22 @@ namespace Recordroid
                     fpsLabel.Text = "300";
                     break;
             }
+        }
+
+        private void copyLocationButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(recordPathTextBox.Text);
+        }
+
+        private void pauseButton_Click(object sender, EventArgs e)
+        {
+            if (rec.Status == RecorderStatus.Paused)
+            {
+                rec.Resume();
+                return;
+            }
+            rec.Pause();
+
         }
     }
     

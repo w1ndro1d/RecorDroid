@@ -163,7 +163,7 @@ namespace Recordroid
             this.doneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.doneButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.doneButton.Image = ((System.Drawing.Image)(resources.GetObject("doneButton.Image")));
-            this.doneButton.Location = new System.Drawing.Point(389, 21);
+            this.doneButton.Location = new System.Drawing.Point(390, 12);
             this.doneButton.Name = "doneButton";
             this.doneButton.Size = new System.Drawing.Size(36, 36);
             this.doneButton.TabIndex = 22;
@@ -207,7 +207,7 @@ namespace Recordroid
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
-            this.ClientSize = new System.Drawing.Size(436, 329);
+            this.ClientSize = new System.Drawing.Size(436, 334);
             this.ControlBox = false;
             this.Controls.Add(this.videoQualityLabel);
             this.Controls.Add(this.groupBox1);

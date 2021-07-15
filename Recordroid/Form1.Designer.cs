@@ -44,6 +44,8 @@ namespace Recordroid
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.fpsTrackBar = new System.Windows.Forms.TrackBar();
             this.fpsLabel = new System.Windows.Forms.Label();
+            this.recordPathTextBox = new System.Windows.Forms.TextBox();
+            this.copyLocationButton = new Recordroid.CircularButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fpsTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -55,12 +57,12 @@ namespace Recordroid
             this.storePathTextBox.Name = "storePathTextBox";
             this.storePathTextBox.Size = new System.Drawing.Size(328, 23);
             this.storePathTextBox.TabIndex = 4;
-            this.storePathTextBox.Text = "Choose location to save recording";
+            this.storePathTextBox.Text = "Choose location to save recording...";
             // 
             // desktopAudioChkBox
             // 
             this.desktopAudioChkBox.AutoSize = true;
-            this.desktopAudioChkBox.Location = new System.Drawing.Point(24, 153);
+            this.desktopAudioChkBox.Location = new System.Drawing.Point(24, 177);
             this.desktopAudioChkBox.Name = "desktopAudioChkBox";
             this.desktopAudioChkBox.Size = new System.Drawing.Size(141, 19);
             this.desktopAudioChkBox.TabIndex = 6;
@@ -75,7 +77,7 @@ namespace Recordroid
             this.recordButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.recordButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.recordButton.Image = ((System.Drawing.Image)(resources.GetObject("recordButton.Image")));
-            this.recordButton.Location = new System.Drawing.Point(163, 182);
+            this.recordButton.Location = new System.Drawing.Point(163, 212);
             this.recordButton.Name = "recordButton";
             this.recordButton.Size = new System.Drawing.Size(36, 36);
             this.recordButton.TabIndex = 8;
@@ -90,16 +92,17 @@ namespace Recordroid
             this.pauseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.pauseButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.pauseButton.Image = ((System.Drawing.Image)(resources.GetObject("pauseButton.Image")));
-            this.pauseButton.Location = new System.Drawing.Point(205, 182);
+            this.pauseButton.Location = new System.Drawing.Point(205, 212);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(36, 36);
             this.pauseButton.TabIndex = 9;
             this.pauseButton.UseVisualStyleBackColor = false;
+            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(248, 195);
+            this.label1.Location = new System.Drawing.Point(248, 225);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 15);
             this.label1.TabIndex = 11;
@@ -107,7 +110,7 @@ namespace Recordroid
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(110, 195);
+            this.label2.Location = new System.Drawing.Point(110, 225);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 12;
@@ -119,7 +122,7 @@ namespace Recordroid
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
-            this.settingsButton.Location = new System.Drawing.Point(2, 182);
+            this.settingsButton.Location = new System.Drawing.Point(315, 11);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(36, 36);
             this.settingsButton.TabIndex = 14;
@@ -129,7 +132,7 @@ namespace Recordroid
             // micAudioChkBox
             // 
             this.micAudioChkBox.AutoSize = true;
-            this.micAudioChkBox.Location = new System.Drawing.Point(232, 153);
+            this.micAudioChkBox.Location = new System.Drawing.Point(232, 177);
             this.micAudioChkBox.Name = "micAudioChkBox";
             this.micAudioChkBox.Size = new System.Drawing.Size(119, 19);
             this.micAudioChkBox.TabIndex = 17;
@@ -143,9 +146,9 @@ namespace Recordroid
             this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.browseButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.browseButton.Image = ((System.Drawing.Image)(resources.GetObject("browseButton.Image")));
-            this.browseButton.Location = new System.Drawing.Point(357, 55);
+            this.browseButton.Location = new System.Drawing.Point(356, 55);
             this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(36, 36);
+            this.browseButton.Size = new System.Drawing.Size(34, 34);
             this.browseButton.TabIndex = 18;
             this.browseButton.UseVisualStyleBackColor = false;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
@@ -153,7 +156,7 @@ namespace Recordroid
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.fpsTrackBar);
-            this.groupBox1.Location = new System.Drawing.Point(23, 94);
+            this.groupBox1.Location = new System.Drawing.Point(23, 121);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(328, 51);
             this.groupBox1.TabIndex = 19;
@@ -176,15 +179,40 @@ namespace Recordroid
             // fpsLabel
             // 
             this.fpsLabel.AutoSize = true;
-            this.fpsLabel.Location = new System.Drawing.Point(361, 115);
+            this.fpsLabel.Location = new System.Drawing.Point(361, 143);
             this.fpsLabel.Name = "fpsLabel";
             this.fpsLabel.Size = new System.Drawing.Size(19, 15);
             this.fpsLabel.TabIndex = 18;
             this.fpsLabel.Text = "30";
             // 
+            // recordPathTextBox
+            // 
+            this.recordPathTextBox.Location = new System.Drawing.Point(23, 92);
+            this.recordPathTextBox.Name = "recordPathTextBox";
+            this.recordPathTextBox.ReadOnly = true;
+            this.recordPathTextBox.Size = new System.Drawing.Size(328, 23);
+            this.recordPathTextBox.TabIndex = 20;
+            this.recordPathTextBox.Text = "Recording saved as...";
+            // 
+            // copyLocationButton
+            // 
+            this.copyLocationButton.BackColor = System.Drawing.Color.White;
+            this.copyLocationButton.FlatAppearance.BorderSize = 0;
+            this.copyLocationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copyLocationButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.copyLocationButton.Image = ((System.Drawing.Image)(resources.GetObject("copyLocationButton.Image")));
+            this.copyLocationButton.Location = new System.Drawing.Point(357, 88);
+            this.copyLocationButton.Name = "copyLocationButton";
+            this.copyLocationButton.Size = new System.Drawing.Size(34, 34);
+            this.copyLocationButton.TabIndex = 21;
+            this.copyLocationButton.UseVisualStyleBackColor = false;
+            this.copyLocationButton.Click += new System.EventHandler(this.copyLocationButton_Click);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(400, 221);
+            this.ClientSize = new System.Drawing.Size(400, 258);
+            this.Controls.Add(this.copyLocationButton);
+            this.Controls.Add(this.recordPathTextBox);
             this.Controls.Add(this.fpsLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.browseButton);
@@ -225,6 +253,8 @@ namespace Recordroid
         public System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.TrackBar fpsTrackBar;
         public System.Windows.Forms.Label fpsLabel;
+        private System.Windows.Forms.TextBox recordPathTextBox;
+        private CircularButton copyLocationButton;
     }
 }
 
