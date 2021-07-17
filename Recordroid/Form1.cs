@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using ScreenRecorderLib;
+using System.Drawing;
 
 
 namespace Recordroid
@@ -11,6 +12,7 @@ namespace Recordroid
     {
         Form2 form2 = new Form2();
         private bool isRecording; //flag for recording status
+        private bool isPaused; //flag for recording status
         private int secondsElapsed;  //elapsed time in seconds after pressing record
         Recorder rec;
 
@@ -38,7 +40,7 @@ namespace Recordroid
 
             }
         };
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -50,10 +52,19 @@ namespace Recordroid
             desktopAudioChkBox.Checked = true;
             copyLocationButton.Enabled = false;
             pauseButton.Enabled = false;
-
+            notifyIcon1.BalloonTipTitle = "RecorDroid";
+            notifyIcon1.BalloonTipText = "Minimized to tray.";
+            notifyIcon1.Text = "RecorDroid";
         }
 
         private void circularButton1_Click(object sender, EventArgs e)
+        {
+            perform_recording();
+            startRecordingToolStripMenuItem.Text = "Stop recording";
+            pauseRecordingToolStripMenuItem.Enabled = true;
+        }
+
+        private void perform_recording()
         {
             if (isRecording)
             {
@@ -61,6 +72,7 @@ namespace Recordroid
                 label2.Text = "";
                 label1.Text = "";
                 settingsButton.Enabled = true;
+                preferencesToolStripMenuItem.Enabled = true;
                 desktopAudioChkBox.Enabled = true;
                 micAudioChkBox.Enabled = true;
                 browseButton.Enabled = true;
@@ -84,6 +96,7 @@ namespace Recordroid
 
             label1.Text = "Recording";
             settingsButton.Enabled = false;
+            preferencesToolStripMenuItem.Enabled = false;
             desktopAudioChkBox.Enabled = false;
             micAudioChkBox.Enabled = false;
             browseButton.Enabled = false;
@@ -104,17 +117,17 @@ namespace Recordroid
 
                 if (micAudioChkBox.Checked)
                 {
-                    
+
                     options.AudioOptions.IsInputDeviceEnabled = true;
-                    options.AudioOptions.InputVolume = 0.75F;
-                    options.AudioOptions.OutputVolume = 0.25F;
+                    options.AudioOptions.InputVolume = 0.80F;
+                    options.AudioOptions.OutputVolume = 0.20F;
                 }
                 else
                 {
                     options.AudioOptions.IsInputDeviceEnabled = false;
                 }
 
-                if(form2.hwEncodeChkBox.Checked)
+                if (form2.hwEncodeChkBox.Checked)
                 {
                     options.IsHardwareEncodingEnabled = true;
                 }
@@ -123,7 +136,7 @@ namespace Recordroid
                     options.IsHardwareEncodingEnabled = true;
                 }
 
-                if(form2.mouseCursorChkBox.Checked)
+                if (form2.mouseCursorChkBox.Checked)
                 {
                     options.MouseOptions.IsMousePointerEnabled = true;
                 }
@@ -132,7 +145,7 @@ namespace Recordroid
                     options.MouseOptions.IsMousePointerEnabled = false;
                 }
 
-                if(form2.mouseClickChkBox.Checked)
+                if (form2.mouseClickChkBox.Checked)
                 {
                     options.MouseOptions.IsMouseClicksDetected = true;
                 }
@@ -141,7 +154,7 @@ namespace Recordroid
                     options.MouseOptions.IsMouseClicksDetected = false;
                 }
 
-                switch(Int16.Parse(form2.audioBitrateLabel.Text))
+                switch (Int16.Parse(form2.audioBitrateLabel.Text))
                 {
                     case 96:
                         options.AudioOptions.Bitrate = AudioBitrate.bitrate_96kbps;
@@ -154,6 +167,42 @@ namespace Recordroid
                         break;
                     case 192:
                         options.AudioOptions.Bitrate = AudioBitrate.bitrate_192kbps;
+                        break;
+                    default:
+                        options.AudioOptions.Bitrate = AudioBitrate.bitrate_192kbps;
+                        break;
+
+                }
+
+                switch (Int16.Parse(fpsLabel.Text))
+                {
+                    case 24:
+                        options.VideoOptions.Framerate = 24;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    case 30:
+                        options.VideoOptions.Framerate = 30;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    case 60:
+                        options.VideoOptions.Framerate = 60;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    case 90:
+                        options.VideoOptions.Framerate = 90;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    case 120:
+                        options.VideoOptions.Framerate = 120;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    case 144:
+                        options.VideoOptions.Framerate = 120;
+                        options.VideoOptions.IsFixedFramerate = true;
+                        break;
+                    default:
+                        options.VideoOptions.Framerate = 60;
+                        options.VideoOptions.IsFixedFramerate = true;
                         break;
                 }
 
@@ -170,6 +219,7 @@ namespace Recordroid
             rec.Record(videoPath); //main operation
             secondsElapsed = 0;
             isRecording = true;
+            //isPaused = false;
         }
 
         private void progressTimer_Tick(object sender, EventArgs e)
@@ -180,14 +230,14 @@ namespace Recordroid
 
         private void UpdateProgress() //visual illustration of time elapsed in recording to user
         {
-            label2.Text= TimeSpan.FromSeconds(secondsElapsed).ToString();
+            label2.Text = TimeSpan.FromSeconds(secondsElapsed).ToString();
         }
 
         private void rec_OnRecordingFailed(object sender, RecordingFailedEventArgs e)
         {
             BeginInvoke(((Action)(() =>
             {
-                label1.Text = "Error:"+e.Error;
+                label1.Text = "Error:" + e.Error;
                 isRecording = false;
                 CleanupResources();
             })));
@@ -200,8 +250,16 @@ namespace Recordroid
                 string filePath = e.FilePath;
                 recordPathTextBox.Text = filePath;
                 label1.Text = "Finished Recording!";
+                startRecordingToolStripMenuItem.Text = "Start Recording";
+                pauseRecordingToolStripMenuItem.Enabled = false;
+                pauseRecordingToolStripMenuItem.Text = "Pause Recording";
                 recordButton.Enabled = true;
                 isRecording = false;
+                isPaused = false;
+                notifyIcon1.Text = "RecorDroid : Finished";
+                notifyIcon1.BalloonTipTitle = "RecorDroid";
+                notifyIcon1.BalloonTipText = "Finished recording!";
+                pauseButton.Image = Recordroid.Properties.Resources.pause_2_32x32;
                 CleanupResources();
             })));
         }
@@ -215,12 +273,20 @@ namespace Recordroid
                     case RecorderStatus.Paused:
                         if (progressTimer != null)
                             progressTimer.Enabled = false;
-                        label1.Text = "Paused";
+                        label1.Text = "Paused.";
+                        notifyIcon1.Text = "RecorDroid : Paused";
+                        notifyIcon1.BalloonTipTitle = "RecorDroid";
+                        notifyIcon1.BalloonTipText = "Paused";
+                        pauseRecordingToolStripMenuItem.Text = "Resume recording";
                         break;
                     case RecorderStatus.Recording:
                         if (progressTimer != null)
                             progressTimer.Enabled = true;
-                        label1.Text = "Recording";
+                        label1.Text = "Recording...";
+                        notifyIcon1.Text = "RecorDroid : Started";
+                        notifyIcon1.BalloonTipTitle = "RecorDroid";
+                        notifyIcon1.BalloonTipText = "Started";
+                        pauseRecordingToolStripMenuItem.Text = "Pause recording";
                         break;
                     default:
                         break;
@@ -245,15 +311,16 @@ namespace Recordroid
             {
                 storePathTextBox.Text = fbd.SelectedPath;
                 recordButton.Enabled = true;
+                startRecordingToolStripMenuItem.Enabled = true;
                 
-
+                
             }
         }
 
         private void circularButton3_Click(object sender, EventArgs e)
         {
             form2.ShowDialog();
-            
+
         }
 
         private void fpsTrackBar_Scroll(object sender, EventArgs e)
@@ -278,27 +345,130 @@ namespace Recordroid
                 case 6:
                     fpsLabel.Text = "144";
                     break;
-                case 7:
-                    fpsLabel.Text = "300";
-                    break;
+
             }
         }
 
         private void copyLocationButton_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(recordPathTextBox.Text);
+            label1.Text = "Copied to clipboard.";
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
+            perform_pause();
+            notifyIcon1.Text = "RecorDroid : Paused";
+            notifyIcon1.BalloonTipTitle = "RecorDroid";
+            notifyIcon1.BalloonTipText = "Paused";
+            pauseRecordingToolStripMenuItem.Text = "Resume recording";
+
+        }
+
+        private void perform_pause()
+        {
             if (rec.Status == RecorderStatus.Paused)
             {
                 rec.Resume();
+                pauseRecordingToolStripMenuItem.Text = "Pause recording";
+                pauseButton.Image = Recordroid.Properties.Resources.pause_2_32x32;
                 return;
             }
             rec.Pause();
+            notifyIcon1.Text = "RecorDroid : Paused";
+            notifyIcon1.BalloonTipTitle = "RecorDroid";
+            notifyIcon1.BalloonTipText = "Paused";
+            pauseRecordingToolStripMenuItem.Text = "Resume recording";
+            isPaused = true;
+            pauseButton.Image = Recordroid.Properties.Resources.play_32x32;
+        }
+
+        private void crossButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(1000);
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        private void minButton_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            notifyIcon1.Visible = false;
+            WindowState = FormWindowState.Normal;
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isRecording || isPaused)
+            {
+                MessageBox.Show("Can't exit. Please stop the current recording task first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isRecording || isPaused)
+            {
+                MessageBox.Show("Unable to exit. Please stop the current recording task first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Application.Exit();
+        }
+
+        private void startRecordingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            perform_recording();
+            notifyIcon1.BalloonTipTitle = "RecorDroid";
+            notifyIcon1.BalloonTipText = "Recording has started.";
+            notifyIcon1.Text = "RecorDroid : Started";
+            startRecordingToolStripMenuItem.Text = "Stop recording";
+            pauseRecordingToolStripMenuItem.Enabled = true;
+
+        }
+
+        private void pauseRecordingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isRecording)
+            {
+                perform_pause();
+
+            }
+            pauseRecordingToolStripMenuItem.Enabled = true;
+            notifyIcon1.BalloonTipTitle = "RecorDroid";
+            notifyIcon1.BalloonTipText = "Recording paused.";
+            notifyIcon1.Text = "RecorDroid : Paused";
+        }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.ShowDialog();
+        }
+
+        private void recorDroidToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            notifyIcon1.Visible = false;
+            WindowState = FormWindowState.Normal;
 
         }
     }
-    
 }
